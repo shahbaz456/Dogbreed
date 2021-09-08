@@ -24,7 +24,7 @@ export default function Search() {
 
   const [currentidx, setcurrentidx] = useState(queryStr.get("index"));
   const dispatch = useDispatch();
-  const { breads, breadImages } = useSelector((state) => state.data);
+  const { breeds, breedImages } = useSelector((state) => state.data);
   const [selectbreed, setselectbreed] = useState("");
 
   const [modal, setModal] = useState(false);
@@ -36,7 +36,7 @@ export default function Search() {
       .then((response) => response.json())
       .then((data) => {
         console.log("show data of ", data);
-        dispatch({ type: "LIST_BREADS", payload: Object.keys(data.message) });
+        dispatch({ type: "LIST_BREEDS", payload: Object.keys(data.message) });
       })
       .catch((error) => {
         console.error(error.message);
@@ -49,7 +49,7 @@ export default function Search() {
       .then((data) => {
         console.log("show data of ", data);
 
-        dispatch({ type: "GET_BREAD_IMAGES", payload: data.message });
+        dispatch({ type: "GET_BREED_IMAGES", payload: data.message });
         return;
       })
       .catch((error) => {
@@ -86,7 +86,7 @@ export default function Search() {
     [queryStr.get("breed")]
   );
 
-  const breakPoints = [{ width: 800, itemsToScroll: 3, itemsToShow: 7 }];
+  const breakPoints = [{ width: 800, itemsToScroll: 3, itemsToShow: 8 }];
 
   return (
     <div>
@@ -108,10 +108,10 @@ export default function Search() {
       </div>
 
       <div ref={ref} className="list-item">
-        {breads.length > 0 && (
+        {breeds.length > 0 && (
           <div className="butn">
             <Carousel breakPoints={breakPoints} pagination={false}>
-              {breads
+              {breeds
                 .filter((item) =>
                   item.toLowerCase().includes(search.toLowerCase())
                 )
@@ -135,8 +135,8 @@ export default function Search() {
 
       <div className="outer">
         <div className="imagess">
-          {breadImages.length > 0 &&
-            breadImages.map((item, index) => {
+          {breedImages.length > 0 &&
+            breedImages.map((item, index) => {
               return (
                 <div className="single-image">
                   <img
