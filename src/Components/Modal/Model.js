@@ -10,21 +10,21 @@ function useQuery() {
 const Model = ({ modal, toggle, currentidx }) => {
   const hist = useHistory();
   let queryStr = useQuery();
-  const { breadImages } = useSelector((state) => state.data);
+  const { breedImages } = useSelector((state) => state.data);
   return (
     <div>
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader className="headmine">Dog Image</ModalHeader>
 
         <ModalBody>
-          {breadImages.length > 0 && (
+          {breedImages.length > 0 && (
             <div className="mdbody">
-              <img src={breadImages[currentidx]} alt="" />
+              <img src={breedImages[currentidx]} alt="" />
             </div>
           )}
         </ModalBody>
         <ModalFooter>
-          <a href={breadImages[currentidx]} download="download.jpg">
+          <a href={breedImages[currentidx]} download="download.jpg">
             download
           </a>
 
