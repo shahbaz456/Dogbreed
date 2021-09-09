@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useRef, useEffect } from "react";
-
+import { Spinner } from "reactstrap";
 import Model from "../Modal/Model";
 import { useLocation, useHistory } from "react-router-dom";
 import Carousel from "react-elastic-carousel";
@@ -24,19 +24,25 @@ export default function Search() {
 
   const [currentidx, setcurrentidx] = useState(queryStr.get("index"));
   const dispatch = useDispatch();
-  const { breeds, breedImages } = useSelector((state) => state.data);
+  const { breeds, breedImages, filterbreeds } = useSelector(
+    (state) => state.data
+  );
   const [selectbreed, setselectbreed] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [loading, setloading] = useState(true);
 
   const [modal, setModal] = useState(false);
 
   const toggle = () => setModal(!modal);
 
   const handleClick = async (search) => {
+    setloading(true);
     await fetch(`https://dog.ceo/api/breeds/list/all`)
       .then((response) => response.json())
       .then((data) => {
         console.log("show data of ", data);
         dispatch({ type: "LIST_BREEDS", payload: Object.keys(data.message) });
+        setloading(false);
       })
       .catch((error) => {
         console.error(error.message);
@@ -44,12 +50,14 @@ export default function Search() {
   };
 
   const getImage = async (breed) => {
+    setIsLoading(true);
     await fetch(`https://dog.ceo/api/breed/${breed}/images`)
       .then((response) => response.json())
       .then((data) => {
         console.log("show data of ", data);
 
         dispatch({ type: "GET_BREED_IMAGES", payload: data.message });
+        setIsLoading(false);
         return;
       })
       .catch((error) => {
@@ -101,7 +109,10 @@ export default function Search() {
               placeholder="Search Breed..."
               aria-label="Search"
               className="form-control"
-              onChange={(e) => setsearch(e.target.value)}
+              onChange={(e) => {
+                setsearch(e.target.value);
+                dispatch({ type: "FILTER_BREEDS", payload: e.target.value });
+              }}
             />
           </div>
         </div>
@@ -110,31 +121,43 @@ export default function Search() {
       <div ref={ref} className="list-item">
         {breeds.length > 0 && (
           <div className="butn">
-            <Carousel breakPoints={breakPoints} pagination={false}>
-              {breeds
-                .filter((item) =>
-                  item.toLowerCase().includes(search.toLowerCase())
-                )
-                .map((element, index) => (
-                  <button
-                    button
-                    className="all-btn"
-                    onClick={() => {
-                      hist.push(`/home?breed=${element}`);
-                      setselectbreed(element);
-                      getImage(element);
-                    }}
-                  >
-                    {element}
-                  </button>
-                ))}
-            </Carousel>
+            {loading ? (
+              <Spinner />
+            ) : (
+              <Carousel breakPoints={breakPoints} pagination={false}>
+                {filterbreeds.length > 0 &&
+                  filterbreeds.map((element, index) => (
+                    <button
+                      button
+                      className={
+                        selectbreed === element
+                          ? "all-btn active-button"
+                          : "all-btn"
+                      }
+                      // className="all-btn active-button"
+                      onClick={() => {
+                        hist.push(`/home?breed=${element}`);
+                        setselectbreed(element);
+                        setsearch(element);
+                        getImage(element);
+                      }}
+                    >
+                      {element}
+                    </button>
+                  ))}
+              </Carousel>
+            )}
           </div>
         )}
       </div>
 
       <div className="outer">
         <div className="imagess">
+          {isLoading && (
+            <div className="onspin">
+              <Spinner />
+            </div>
+          )}
           {breedImages.length > 0 &&
             breedImages.map((item, index) => {
               return (
@@ -144,7 +167,7 @@ export default function Search() {
                     alt=""
                     onClick={() => {
                       hist.push(
-                        `/home?modal=${true}&breed=${selectbreed}&idx=${index}`
+                        `/home?breed=${selectbreed}&modal=${true}&idx=${index}`
                       );
                       setcurrentidx(index);
                       toggle();
@@ -153,6 +176,7 @@ export default function Search() {
                 </div>
               );
             })}
+
           <Model
             toggle={toggle}
             modal={modal}

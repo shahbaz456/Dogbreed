@@ -109,6 +109,20 @@
   border: none;
   background: none;
 }
+.imagess {
+  position: relative;
+}
+.onspin {
+  position: absolute;
+  min-height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  opacity: 0.7;
+}
+
 .imagess img {
   /* display: flex; */
   /* flex-direction: column; */
@@ -151,3 +165,19 @@
   opacity: 1;
   transition: all 0.2s;
 } */
+.sr-only {
+  display: none !important;
+}
+.active-button {
+  border: 1px solid #0a58ca;
+  color: blue;
+  padding: 10px;
+}
+.spinner-border {
+  width: 3rem !important;
+  height: 3rem !important;
+  color: black !important;
+  position: absolute !important;
+  top: 150px;
+  /* border: 0.4em solid black !important; */
+}

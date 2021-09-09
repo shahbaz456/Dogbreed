@@ -31,11 +31,7 @@ const Model = ({ modal, toggle, currentidx }) => {
           <Button
             color="secondary"
             onClick={() => {
-              hist.push(
-                `/home?modal=${false}&breed=${queryStr.get(
-                  "breed"
-                )}&idx=${queryStr.get("index")}`
-              );
+              hist.push(`/home?breed=${queryStr.get("breed")}&modal=${false}`);
               toggle();
             }}
           >
