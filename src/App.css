@@ -46,12 +46,14 @@
 }
 .bread {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
-  margin-left: 40px;
+  margin-left: 35px;
+  margin-right: 25px;
 }
 .fontt {
   font-family: "Oswald", sans-serif;
+  margin: 0%;
 }
 .go-to {
   color: dimgrey;
@@ -80,7 +82,7 @@
 .butn {
   border: none;
   border-radius: 5px;
-  display: flex;
+  /* display: flex; */
   margin: 10px;
 }
 .list-item {
@@ -134,18 +136,18 @@
   cursor: pointer;
   margin-top: 7px;
 }
-.imagess img:hover {
+/* .imagess img:hover {
   transform: scale(1.04);
-}
+} */
 .single-image {
   overflow: hidden;
   display: contents;
   height: 275px;
   width: 360px;
 }
-.single-image:hover {
+/* .single-image:hover {
   transform: scale(1.04);
-}
+} */
 .outer {
   margin-top: 45px;
 }
@@ -169,9 +171,9 @@
   display: none !important;
 }
 .active-button {
-  border: 1px solid #0a58ca;
-  color: blue;
-  padding: 10px;
+  /* border: 1px solid #0a58ca; */
+  background-color: burlywood;
+  /* padding: 10px; */
 }
 .spinner-border {
   width: 3rem !important;
@@ -181,3 +183,39 @@
   top: 150px;
   /* border: 0.4em solid black !important; */
 }
+.heart {
+  border: none;
+  width: 40px;
+  background: none;
+  font-size: 30px;
+  color: darkgrey;
+}
+.like-Hert {
+  float: right;
+}
+.inactive-button {
+  color: chocolate;
+}
+.card-div {
+  display: inline-grid !important;
+  margin: 10px;
+}
+.fav {
+  font-family: "Oswald", sans-serif;
+}
+.fav-btn {
+  border: none;
+  text-decoration: underline;
+  border-radius: 5px;
+  font-size: 22px;
+  background: none;
+}
+.fav-btn:hover {
+  color: #0d1ad8;
+}
+/* .breads {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 35px;
+} */

@@ -2,6 +2,7 @@ const initialState = {
   breeds: [],
   filterbreeds: [],
   breedImages: [],
+  favImage: [],
 };
 
 const breadsReducer = (state = initialState, action) => {
@@ -16,6 +17,16 @@ const breadsReducer = (state = initialState, action) => {
         filterbreeds: state.breeds.filter((item) =>
           item.toLowerCase().includes(action.payload.toLowerCase())
         ),
+      };
+    case "LIKE_IMAGE":
+      return {
+        ...state,
+        favImage: [...state.favImage, action.payload],
+      };
+    case "UNLIKE_IMAGE":
+      return {
+        ...state,
+        favImage: state.favImage.filter((item) => item !== action.payload),
       };
     default:
       return state;
